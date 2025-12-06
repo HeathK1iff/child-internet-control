@@ -1,0 +1,32 @@
+services:
+  service_api:
+    container_name: "chc_service_api"
+    build: 
+      context: ./service-api
+      dockerfile: ./Dockerfile
+      args:
+        -  URL=http://+:8082
+        -  AUTH_KEY=2a93f8a5-cf41-466f-adf0-d83981e53e6a
+        -  ROUTER_HOST=192.168.1.1
+        -  ROUTER_LOGIN=user
+        -  ROUTER_PSW=*****
+    ports:
+      - 8082:8082
+    networks:
+      - chc_net
+
+  web_ui:
+    container_name: "chc_web_ui"
+    build: 
+      dockerfile: ./Dockerfile
+      context: ./web-ui
+      args:
+        - AUTH_KEY=2a93f8a5-cf41-466f-adf0-d83981e53e6a
+        - API_URL=http://localhost:8082
+    ports:
+      - 8081:3000
+    networks:
+      - chc_net
+
+networks:
+  chc_net:

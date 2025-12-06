@@ -1,0 +1,292 @@
+/* Device Statistics - Button Style */
+.device-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  min-width: auto;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.stat-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 120px;
+  padding: 20px 25px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-item.total {
+  border-color: #3498db;
+  background: linear-gradient(135deg, #f0f8ff 0%, #e3f2fd 100%);
+}
+
+.stat-item.online {
+  border-color: #2ecc71;
+  background: linear-gradient(135deg, #f0fff4 0%, #e8f5e9 100%);
+}
+
+.stat-item.offline {
+  border-color: #e74c3c;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffebee 100%);
+}
+
+.stat-item.showing {
+  border-color: #9b59b6;
+  background: linear-gradient(135deg, #f9f0ff 0%, #f3e5f5 100%);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #5d6d7e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-label::before {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 0.9rem;
+}
+
+.stat-item.total .stat-label::before {
+  content: '\f0c0'; /* users icon */
+  color: #3498db;
+}
+
+.stat-item.online .stat-label::before {
+  content: '\f0ec'; /* wifi icon */
+  color: #2ecc71;
+}
+
+.stat-item.offline .stat-label::before {
+  content: '\f127'; /* chain-broken icon */
+  color: #e74c3c;
+}
+
+.stat-item.showing .stat-label::before {
+  content: '\f06e'; /* eye icon */
+  color: #9b59b6;
+}
+
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.stat-value.total {
+  color: #3498db;
+  text-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+.stat-value.online {
+  color: #2ecc71;
+  text-shadow: 0 2px 8px rgba(46, 204, 113, 0.2);
+}
+
+.stat-value.offline {
+  color: #e74c3c;
+  text-shadow: 0 2px 8px rgba(231, 76, 60, 0.2);
+}
+
+.stat-value.showing {
+  color: #9b59b6;
+  text-shadow: 0 2px 8px rgba(155, 89, 182, 0.2);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* Subtle shine effect on hover */
+.stat-item::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  transition: all 0.6s ease;
+  opacity: 0;
+}
+
+.stat-item:hover::after {
+  opacity: 1;
+  transform: rotate(30deg) translate(10%, 10%);
+}
+
+/* Animated pulse effect for online devices */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+  }
+}
+
+.stat-item.online:hover {
+  animation: pulse 2s infinite;
+}
+
+/* Update list header section */
+.list-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 30px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.list-title {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  padding: 10px 0;
+}
+
+/* Data source info - update to match */
+.data-source-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 25px 0;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 10px;
+  border: 2px solid #dee2e6;
+  font-size: 0.95rem;
+  color: #2c3e50;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.data-source-info i {
+  color: #3498db;
+  font-size: 1.2rem;
+}
+
+.data-source-info span {
+  font-family: 'Courier New', monospace;
+  word-break: break-all;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Update load more buttons to match */
+.load-more-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 40px 0 25px;
+  padding: 30px 0;
+  border-top: 2px solid #f0f0f0;
+}
+
+.load-more-btn, .show-all-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 200px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.load-more-btn {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  border-color: #2980b9;
+}
+
+.load-more-btn:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #1c5a87 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+  border-color: #1c5a87;
+}
+
+.show-all-btn {
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  color: white;
+  border-color: #27ae60;
+}
+
+.show-all-btn:hover {
+  background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3);
+  border-color: #1e8449;
+}
+
+.load-more-btn i, .show-all-btn i {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.load-more-btn:hover i {
+  transform: translateY(3px);
+}
+
+.show-all-btn:hover i {
+  transform: scale(1.2);
+}
+
+/* Add this to App.css or ListContainer.css to override */
+
+.list-item .item-checkbox-container {
+  pointer-events: auto; /* Re-enable for checkbox */
+}
+
+.list-item:focus {
+  transform: none !important;
+  box-shadow: none !important;
+  background-color: #f8fafc !important;
+  outline: none !important;
+}
