@@ -1,4 +1,6 @@
 namespace DeviceControlService.Application.Middlewares;
+
+//TO DO: Temporary solution, not secure
 public sealed class HeaderRestrictionMiddleware
 {
     const string AuthHeaderKey = "X-Auth";

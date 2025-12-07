@@ -1,13 +1,18 @@
 using System.Reflection;
 using DeviceControlService.Application.MapperProfile;
-using DeviceControlService.Application.Middlewares;
 using DeviceControlService.Infrastructure.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+const string DefaultCorsPolicyName = "default";
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
 
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddLogging(c => c.AddConsole());
+builder.Services.AddSerilog();
 builder.Services.AddAutoMapper(cf =>
 {
     cf.AddMaps([Assembly.GetAssembly(typeof(DeviceMapperProfile))]);
@@ -15,14 +20,13 @@ builder.Services.AddAutoMapper(cf =>
 
 builder.Services.AddCors(a =>
 {
-    a.AddPolicy("all", p =>
+    a.AddPolicy(DefaultCorsPolicyName, policy =>
     {
-        p.AllowAnyOrigin();
-        p.AllowAnyMethod();
-        p.AllowAnyHeader();
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
     });
 });
-
 
 
 builder.Services.AddControllers();
@@ -32,8 +36,9 @@ builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 app.MapControllers();
-app.UseCors("all");
-app.UseMiddleware<HeaderRestrictionMiddleware>();
+app.UseCors(DefaultCorsPolicyName);
+app.UseHostFiltering();
+app.UseHeaderRestriction();
 app.UseHttpsRedirection();
 
 app.Run();
