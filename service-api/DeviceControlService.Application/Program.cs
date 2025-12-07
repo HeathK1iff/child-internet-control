@@ -19,11 +19,11 @@ builder.Services.AddAutoMapper(cf =>
 
 builder.Services.AddCors(a =>
 {
-    a.AddDefaultPolicy(policy =>
+    a.AddPolicy("default", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
     });
 });
 
@@ -39,6 +39,7 @@ app.UseCors();
 app.UseHostFiltering();
 app.UseHeaderRestriction();
 app.UseHttpsRedirection();
+app.UseCors("default");
 app.UseIPAddressRestriction();
 app.Run();
 
