@@ -4,7 +4,6 @@ using DeviceControlService.Infrastructure.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-const string DefaultCorsPolicyName = "default";
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -20,11 +19,11 @@ builder.Services.AddAutoMapper(cf =>
 
 builder.Services.AddCors(a =>
 {
-    a.AddPolicy(DefaultCorsPolicyName, policy =>
+    a.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin();
-        policy.AllowAnyHeader();
-        policy.AllowAnyMethod();
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -36,10 +35,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 app.MapControllers();
-app.UseCors(DefaultCorsPolicyName);
+app.UseCors();
 app.UseHostFiltering();
 app.UseHeaderRestriction();
 app.UseHttpsRedirection();
-
+app.UseIPAddressRestriction();
 app.Run();
 
