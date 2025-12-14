@@ -1,8 +1,4 @@
-ARG URL;
 ARG AUTH_KEY;
-ARG ROUTER_HOST;
-ARG ROUTER_LOGIN;
-ARG ROUTER_PSW;
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
@@ -17,17 +13,9 @@ COPY . .
 RUN dotnet publish ./DeviceControlService.Application/DeviceControlService.Application.csproj -o /app --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 as release
-ARG URL
 ARG AUTH_KEY
-ARG ROUTER_HOST
-ARG ROUTER_LOGIN
-ARG ROUTER_PSW
 WORKDIR /app
-ENV Kestrel__Endpoints__Http__Url=${URL}
 ENV Auth__Key=${AUTH_KEY}
-ENV Router__Host=${ROUTER_HOST}
-ENV Router__Credential__Login=${ROUTER_LOGIN}
-ENV Router__Credential__Password=${ROUTER_PSW}
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "DeviceControlService.Application.dll"]
 
