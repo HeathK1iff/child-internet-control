@@ -13,9 +13,10 @@ builder.Services.AddAutoMapper(cf =>
     cf.AddMaps([Assembly.GetAssembly(typeof(DeviceMapperProfile))]);
 });
 
+const string CorsPolicy = "all";
 builder.Services.AddCors(a =>
 {
-    a.AddPolicy("all", p =>
+    a.AddPolicy(CorsPolicy, p =>
     {
         p.AllowAnyOrigin();
         p.AllowAnyMethod();
@@ -31,10 +32,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-app.MapControllers();
-app.UseCors("all");
-app.UseMiddleware<HeaderRestrictionMiddleware>();
+app.UseRouting();
 app.UseHttpsRedirection();
-
+app.UseCors(CorsPolicy);
+app.MapControllers();
+app.UseMiddleware<HeaderRestrictionMiddleware>();
 app.Run();
 
