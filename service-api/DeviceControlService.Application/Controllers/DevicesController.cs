@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using DeviceControlService.Application.Responses;
 using DeviceControlService.Domain.Abstractions;
 using DeviceControlService.Application.Dto;
+using Microsoft.AspNetCore.Cors;
 
 namespace DeviceControlService.Application.Controllers;
 
 [ApiController]
+[EnableCors("All")]
 [Route("api/v1/[controller]")]
 public sealed class DevicesController(IActivateInternetDeviceService deviceService, IMapper mapper): ControllerBase
 {

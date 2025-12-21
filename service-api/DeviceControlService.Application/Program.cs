@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
-const string CorsPolicy = "all";
+const string CorsPolicy = "All";
 builder.Services.AddCors(a =>
 {
     a.AddPolicy(CorsPolicy, p =>
@@ -32,7 +32,9 @@ var app = builder.Build();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.MapControllers();
-app.UseCors(CorsPolicy);
+app.UseCors();
+
+
 
 app.Run();
 
