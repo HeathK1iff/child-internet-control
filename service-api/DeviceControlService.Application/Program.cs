@@ -1,6 +1,5 @@
 using System.Reflection;
 using DeviceControlService.Application.MapperProfile;
-using DeviceControlService.Application.Middlewares;
 using DeviceControlService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
