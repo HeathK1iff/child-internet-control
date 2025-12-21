@@ -6,10 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
-const string CorsPolicy = "All";
 builder.Services.AddCors(a =>
 {
-    a.AddPolicy(CorsPolicy, p =>
+    a.AddDefaultPolicy(p =>
     {
         p.AllowAnyOrigin()
          .AllowAnyHeader()
@@ -33,8 +32,7 @@ app.UseRouting();
 app.UseCors();
 
 app.UseHttpsRedirection();
-app.MapControllers()
-    .RequireCors(CorsPolicy);
-    
+app.MapControllers();
+
 app.Run();
 
