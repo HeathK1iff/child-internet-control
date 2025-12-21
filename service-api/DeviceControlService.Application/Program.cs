@@ -17,13 +17,19 @@ builder.Services.AddAutoMapper(cf =>
     cf.AddMaps([Assembly.GetAssembly(typeof(DeviceMapperProfile))]);
 });
 
+const string CorsPolicy = "default";
+const string DefaultOrigin = "http://localhost:8081";
+
+string corsOrigin = builder.Configuration["Cors:Origins"] ?? DefaultOrigin;
+
 builder.Services.AddCors(a =>
 {
-    a.AddPolicy("default", policy =>
+    a.AddPolicy(CorsPolicy, policy =>
     {
-        policy.AllowAnyOrigin();
-        policy.AllowAnyHeader();
-        policy.AllowAnyMethod();
+        policy.WithOrigins(corsOrigin)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 
@@ -34,12 +40,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-app.MapControllers();
-app.UseCors();
-app.UseHostFiltering();
-app.UseHeaderRestriction();
+app.UseRouting();
 app.UseHttpsRedirection();
-app.UseCors("default");
+app.UseCors(CorsPolicy);
 app.UseIPAddressRestriction();
+
+app.MapControllers();
+
 app.Run();
 
