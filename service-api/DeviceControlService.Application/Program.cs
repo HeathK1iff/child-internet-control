@@ -6,13 +6,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
+var corsOrigins = builder.Configuration["Cors:Origins"] ?? string.Empty;
+
 builder.Services.AddCors(a =>
 {
-    a.AddDefaultPolicy(p =>
+    a.AddPolicy("All", p =>
     {
-        p.AllowAnyOrigin()
+        p.WithOrigins(corsOrigins)
          .AllowAnyHeader()
-         .AllowAnyMethod();
+         .AllowAnyMethod()
+         .AllowCredentials();
     });
 });
 
@@ -29,7 +32,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 app.UseRouting();
-app.UseCors();
+app.UseCors("All");
 
 app.UseHttpsRedirection();
 app.MapControllers();
