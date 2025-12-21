@@ -30,12 +30,11 @@ builder.Services.AddInfrastructure(builder.Configuration);
 var app = builder.Build();
 
 app.UseRouting();
+app.UseCors();
 
 app.UseHttpsRedirection();
 app.MapControllers()
     .RequireCors(CorsPolicy);
     
-app.UseCors();
-
 app.Run();
 
