@@ -7,12 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
-builder.Services.AddLogging(c => c.AddConsole());
-builder.Services.AddAutoMapper(cf =>
-{
-    cf.AddMaps([Assembly.GetAssembly(typeof(DeviceMapperProfile))]);
-});
-
 const string CorsPolicy = "all";
 builder.Services.AddCors(a =>
 {
@@ -24,7 +18,11 @@ builder.Services.AddCors(a =>
     });
 });
 
-
+builder.Services.AddLogging(c => c.AddConsole());
+builder.Services.AddAutoMapper(cf =>
+{
+    cf.AddMaps([Assembly.GetAssembly(typeof(DeviceMapperProfile))]);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddKeeneticHttpClient(builder.Configuration);
@@ -34,8 +32,8 @@ var app = builder.Build();
 
 app.UseRouting();
 app.UseHttpsRedirection();
-app.UseCors(CorsPolicy);
 app.MapControllers();
-app.UseMiddleware<HeaderRestrictionMiddleware>();
+app.UseCors(CorsPolicy);
+
 app.Run();
 
